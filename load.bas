@@ -5,13 +5,16 @@
 50 data 169, 83, 32, 210, 255, 169, 56, 32
 60 data 210, 255, 169, 50, 32, 210, 255, 169
 70 data 56, 32, 210, 255, 169, 4, 141, 198
- 
-80 fort= 828 to 884 
-90 read i:poke t,i:next
+80 data 0, 169, 19, 141, 119, 2, 169, 13 
+90 data 141, 120, 2, 141, 121, 2, 141, 122
+100 data 2, 96, 84, 0, 138, 98, 128, 0 
+  
+110 fort= 828 to 907
+120 read i:poke t,i:next
 
-100 input"filename: ";f$
-110 close1
-120 open1,8,2,f$+",s,r
-130 print"{clr}new":print"{down}{down}{down}sys828
-140 poke198,3:poke631,19:poke632,13:poke633,13
+130 input"filename: ";f$
+140 close1
+150 open1,8,2,f$+",s,r
+160 print"{clr}new":print"{down}{down}{down}sys828
+170 poke198,3:poke631,19:poke632,13:poke633,13
 

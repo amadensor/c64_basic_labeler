@@ -11,13 +11,17 @@ loop
  pR2," data";
  fort=1to7
  get#1,a$
- if len(a$)=0 then finish
- pR2,str$(asc(a$))+",";
+ if 64 and st then goto finish
+ a=0
+ if len(a$)>0 then a=asc(a$)
+ pR2,str$(a)+",";
  ea=ea+1
  nE
  get#1,a$
- if len(a$)=0 then finish
- pR2,str$(asc(a$))
+ if 64 and st then goto finish
+ a=0
+ if len(a$)>0 then a=asc(a$)
+ pR2,str$(a)
  ea=ea+1
  gO loop
 finish
