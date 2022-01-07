@@ -7,7 +7,7 @@
 70 data 56, 32, 210, 255, 169, 4, 141, 198
  
 80 fort= 828 to 884 
-90 rEi:pOt,i:nE
+90 read i:poke t,i:next
 
 100 input"filename: ";f$
 110 close1
