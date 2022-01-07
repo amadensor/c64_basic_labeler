@@ -1,0 +1,19 @@
+main
+ input"File";a$
+ open1,8,2,a$+",s,r"
+ gosub reader
+ end
+reader
+ gosub readline
+ ?b$
+ if 64 and st tH reT
+ goto reader
+readline
+ b$=""
+readloop
+ get#1,c$
+ if 64 and st then return
+ if c$=chr$(13) then return
+ b$=b$+c$
+ goto readloop
+@

@@ -1,0 +1,23 @@
+start
+ input"filename to load";f1$
+ input"filename to save";f2$
+ open1,8,2,f1$+",p,r
+ open2,8,3,f2$+",s,w
+ get#1,l$:get#1,h$
+ l=asc(l$):h=asc(h$):sa=l+h*256
+ ea=sa
+loop
+ pR2," data";
+ fort=1to7
+ get#1,a$:pR2,asc(a$)+","
+ ea=ea+1
+ if64aNsttHgOend
+ nE
+ get#1,a$:pR2,asc(a$)
+ ea=ea+1:if64aNsttHgOend
+ gOloop
+end
+ pR1,"loadml
+ pR1," fort="sa"to"ea
+ pR1," rEi:pOt,i:nE:end
+@

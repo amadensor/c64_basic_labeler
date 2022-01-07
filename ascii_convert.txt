@@ -1,0 +1,35 @@
+ input"input file";i$
+ input"output file";o$
+ open 2,8,2,i$+",s,r"
+ open 3,8,3,o$+",s,w"
+main
+ a$="":gosub readchar
+ gosub ascii
+ printa$
+ print#3,a$
+ if st=0 then goto main
+ close 2
+ close 3
+ end
+readchar
+ get#2,c$
+ if st<>0 then goto closeup
+ if asc(c$)=13 then return
+ a$=a$+c$
+ if st=0 then goto readchar
+closeup
+ close 2
+ close 3
+ end
+ascii
+ d$="":ifa$=""thena$=chr$(0)
+ fortz=len(a$)to1step-1
+ az=asc(right$(a$,tz))
+ ifaz>64andaz<91thenaz=az+128:goto ascs
+ ifaz>96andaz<124thenaz=az-32:goto ascs
+ ifaz>191andaz<223thenaz=az-128:goto ascs
+ ifaz=8thenaz=20:goto ascs
+ ifaz=20thenaz=8:goto ascs
+ascs
+ d$=d$+chr$(az):next:a$=d$:return
+@
