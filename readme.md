@@ -17,3 +17,16 @@
 * build_d64.sh 
   - BASH shell script to build a disk image of the items in the repo.
 
+## How-To:
+* Run build_d64.sh
+* Mount test test.d64 disk in VICE
+* load"label",8
+* run
+* use the filename reader3
+* run again for ml-loader and ascii-convert
+* load"load",8
+* run
+* use the filename b/reader3
+* hit enter to begin
+* run/stop restore when it completes
+* The BASIC program is in memory for you to run, list, save, whatever you like.
