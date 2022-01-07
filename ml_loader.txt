@@ -6,18 +6,25 @@ start
  get#1,l$:get#1,h$
  l=asc(l$):h=asc(h$):sa=l+h*256
  ea=sa
+ ? sa
 loop
  pR2," data";
  fort=1to7
- get#1,a$:pR2,asc(a$)+","
+ get#1,a$
+ if len(a$)=0 then finish
+ pR2,str$(asc(a$))+",";
  ea=ea+1
- if64aNsttHgOend
  nE
- get#1,a$:pR2,asc(a$)
- ea=ea+1:if64aNsttHgOend
- gOloop
-end
- pR1,"loadml
- pR1," fort="sa"to"ea
- pR1," rEi:pOt,i:nE:end
+ get#1,a$
+ if len(a$)=0 then finish
+ pR2,str$(asc(a$))
+ ea=ea+1
+ gO loop
+finish
+ pR2
+ pR2,"loadml
+ pR2," fort="sa"to"ea
+ pR2," rEi:pOt,i:nE:end
+ close 1
+ close 2
 @
