@@ -36,7 +36,7 @@
  340 print"{home}{down}{down}pass 2"
  350 n=b-s: rem start one step back
  360 for t=1 to c
- 370 ?l$(t);l(t)
+ 370 print l$(t);l(t)
  380 next
  390 close 1
  400 open 1,d,2,f$+",s,r"
@@ -89,7 +89,7 @@
  870 close 2
  880 end
  890rem writeline
- 900 pR2,a$
+ 900 print#2,a$
  910 return
  920rem readline
  930 a$=""
