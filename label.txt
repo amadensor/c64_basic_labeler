@@ -35,6 +35,7 @@ trimr
 pass2setup
  print"{home}{down}{down}pass 2"
  n=b-s: rem start one step back
+ ?"{down}{down}{down}
  for t=1 to c
  ?l$(t);l(t)
  next

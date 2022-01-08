@@ -1,53 +1,105 @@
 
-    3 ifaz=1thennew
-    5 open15,8,15,"i":close15
-   10 diml$(500),l(500):a=10:l=1
-   15 input"filename";z$
-   20 print"{clr}pass 1"
-   30 open2,8,2,z$+",s,r"
-   50 gosub400:ifa$="@"then130
-   60 ifasc(left$(a$,1))=32then110
-   70 l$(l)=a$:l(l)=a:l=l+1
-  110 print"{home}{down}"a:a=a+10:goto50
-  130 close2
-  140 a=10:print"{home}{down}{down}pass 2"
-  150 open2,8,2,z$+",s,r"
-  160 open3,8,3,"b/"+z$+",s,w"
-  170 gosub400:ifa$="@"then350
-  173 ifasc(a$)<>32thena$="rem"+a$
-  174 a$=str$(a)+a$
-  175 print"{home}{down}{down}{down}"a:n=1:a=a+10
-  180 fort=ntolen(a$)
-  190 b$=mid$(a$,t,5)
-  200 ifb$="gosub"thent=t+5:goto250
-  201 b$=mid$(a$,t,2)
-  202 ifb$="gO"thent=t+2:goto250
-  203 b$=mid$(a$,t,3)
-  204 ifb$="goS"thent=t+3:goto250
-  210 b$=mid$(a$,t,4)
-  220 ifb$="goto"thent=t+4:goto250
-  230 next:iflen(a$)>80thenprint"line too long":stop
-  240 gosub450:goto170
-  250 forz=ttolen(a$)
-  260 ifmid$(a$,z,1)=":"then280
-  270 next
-  280 b$=mid$(a$,t,z-t)
-  290 ifleft$(b$,1)=chr$(32)thenb$=right$(b$,len(b$)-1):goto290
-  300 ifright$(b$,1)=chr$(32)thenb$=left$(b$,len(b$)-1):goto300
-  310 ifval(b$)>0then270
-  320 forj=1tol:ifb$=l$(j)then340
-  330 next:print"label not found":stop
-  340 a$=left$(a$,t-1)+str$(l(j))+right$(a$,len(a$)-z+1):n=t
-  345 forz=1to1:next:goto180
-  350 close2:print#3,"@":close3:open15,8,15
-  360 input#15,en,e$,t,s:printen;e$;t;s:ifen>20thenstop
-  370 goto470
-  400 a$=""
-  405 get#2,b$:ifb$=chr$(13)then420
-  410 a$=a$+b$:goto405
-  420 ifa$<>""thenreturn
-  430 goto405
-  450 forg=1tolen(a$)
-  460 print#3,mid$(a$,g,1);:next:print#3:return
-  470 rem
+
+ 10 d=8: rem disk device
+ 20 b=10: rem begin numbers
+ 30 s=10: rem step numbers
+ 40 dim l(500):dim l$(500)
+ 50 input"Filename";f$
+ 60rem pass1setup 
+ 70 print"{clr}pass 1"
+ 80 n=b-s: rem start one step back
+ 90 c=0: rem no labels yet
+ 100 close 1
+ 110 open 1,d,2,f$+",s,r"
+ 120rem pass1
+ 130 gosub 920
+ 140 if a$="@" goto 330
+ 150 n=n+s
+ 160 if asc(left$(a$,1))<>32 then gosub 190
+ 170 print"{home}{down}";n
+ 180 goto 120
+ 190rem addlabel
+ 200 b$=a$
+ 210 gosub 270
+ 220 a$=b$
+ 230 c=c+1
+ 240 l(c)=n
+ 250 l$(c)=a$
+ 260 return
+ 270rem trimlabel
+ 280rem triml
+ 290 if left$(b$,1)=chr$(32) then b$=right$(b$,len(b$)-1): goto 280
+ 300rem trimr
+ 310 if right$(b$,1)=chr$(32) then b$=left$(b$,len(b$)-1): goto 300
+ 320 return
+ 330rem pass2setup
+ 340 print"{home}{down}{down}pass 2"
+ 350 n=b-s: rem start one step back
+ 360 for t=1 to c
+ 370 ?l$(t);l(t)
+ 380 next
+ 390 close 1
+ 400 open 1,d,2,f$+",s,r"
+ 410 open 2,d,3,"b-"+f$+",s,w"
+ 420rem pass2
+ 430 gosub 920
+ 440 if a$="@" then goto 850
+ 450 if asc(a$)<>32 then a$="rem "+a$
+ 460 n=n+s
+ 470 a$=str$(n)+a$
+ 480 print"{home}{down}{down}{down}";n
+ 490 p=1
+ 500rem labelloop
+ 510 q=0:q1=0
+ 520 for t=p to len(a$)
+ 530 if mid$(a$,t,1)=chr$(34) and q=0 then q1=1
+ 540 if mid$(a$,t,1)=chr$(34) and q=1 then q1=0
+ 550 q=q1
+ 560 b$=mid$(a$,t,5)
+ 570 if b$="gosub" and q=0 then t=t+5:goto 680
+ 580 b$=mid$(a$,t,2)
+ 590 if b$="gO" and q=0 then t=t+2:goto 680
+ 600 b$=mid$(a$,t,3)
+ 610 if b$="goS" and q=0 then t=t+3:goto 680
+ 620 b$=mid$(a$,t,4)
+ 630 if b$="goto" and q=0 then t=t+4:goto 680
+ 640 next
+ 650 iflen(a$)>80 then print"line too long":stop
+ 660 gosub 890
+ 670 goto 420
+ 680rem processlabel
+ 690 forz=t to len(a$)
+ 700 if mid$(a$,z,1)=":" then goto 720
+ 710 next
+ 720rem replacelabel
+ 730 b$=mid$(a$,t,z-t)
+ 740 gosub 270
+ 750 rem if val(b$)>0 then GOTO contline
+ 760 for j=1 to c
+ 770 if b$=l$(j) then goto 810
+ 780 next
+ 790 print"label not found"
+ 800 stop
+ 810rem foundlabel
+ 820 a$=left$(a$,t-1)+str$(l(j))+right$(a$,len(a$)-z+1):p=t
+ 830 goto 500
+ 840 
+ 850rem finish2
+ 860 close 1
+ 870 close 2
+ 880 end
+ 890rem writeline
+ 900 pR2,a$
+ 910 return
+ 920rem readline
+ 930 a$=""
+ 940rem readloop
+ 950 get #1,c$
+ 960 if 64 and st then a$="@":goto 1000
+ 970 if c$=chr$(13) then goto 1000
+ 980 a$=a$+c$
+ 990 goto 940
+ 1000rem retline
+ 1010 if a$="" goto 940
+ 1020 return
 
