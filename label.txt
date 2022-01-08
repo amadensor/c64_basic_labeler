@@ -1,0 +1,106 @@
+ d=8: rem disk device
+ b=10: rem begin numbers
+ s=10: rem step numbers
+ dim l(500):dim l$(500)
+ input"Filename";f$
+pass1setup 
+ print"{clr}pass 1"
+ n=b-s: rem start one step back
+ c=0: rem no labels yet
+ close 1
+ open 1,d,2,f$+",s,r"
+pass1
+ gosub readline
+ if a$="@" goto pass2setup
+ n=n+s
+ if asc(left$(a$,1))<>32 then gosub addlabel
+ print"{home}{down}";n
+ goto pass1
+addlabel
+ b$=a$
+ gosub trimlabel
+ a$=b$
+ c=c+1
+ l(c)=n
+ l$(c)=a$
+ return
+trimlabel
+triml
+ if left$(b$,1)=chr$(32) then b$=right$(b$,len(b$)-1): goto triml
+trimr
+ if right$(b$,1)=chr$(32) then b$=left$(b$,len(b$)-1): goto trimr
+ return
+
+
+pass2setup
+ print"{home}{down}{down}pass 2"
+ n=b-s: rem start one step back
+ for t=1 to c
+ ?l$(t);l(t)
+ next
+ close 1
+ open 1,d,2,f$+",s,r"
+ open 2,d,3,"b-"+f$+",s,w"
+pass2
+ gosub readline
+ if a$="@" then goto finish2
+ if asc(a$)<>32 then a$="rem "+a$
+ n=n+s
+ a$=str$(n)+a$
+ print"{home}{down}{down}{down}";n
+ p=1
+labelloop
+ q=0
+ for t=p to len(a$)
+ if mid$(a$,t,1)=chr$(34) and q=0 then q=1
+ if mid$(a$,t,1)=chr$(34) and q=1 then q=0
+ b$=mid$(a$,t,5)
+ if b$="gosub" and q=0 then t=t+5:goto processlabel
+ b$=mid$(a$,t,2)
+ if b$="gO" and q=0 then t=t+2:goto processlabel
+ b$=mid$(a$,t,3)
+ if b$="goS" and q=0 then t=t+3:goto processlabel
+ b$=mid$(a$,t,4)
+ if b$="goto" and q=0 then t=t+4:goto processlabel
+ next
+ iflen(a$)>80 then print"line too long":stop
+ gosub writeline
+ goto pass2
+processlabel
+ forz=t to len(a$)
+ if mid$(a$,z,1)=":" then goto replacelabel
+ next
+replacelabel
+ b$=mid$(a$,t,z-t)
+ gosub trimlabel
+ rem if val(b$)>0 then GOTO contline
+ for j=1 to c
+ if b$=l$(j) then goto foundlabel
+ next
+ print"label not found"
+ stop
+foundlabel
+ a$=left$(a$,t-1)+str$(l(j))+right$(a$,len(a$)-z+1):p=t
+ goto labelloop
+ 
+
+finish2
+ close 1
+ close 2
+ end
+
+writeline
+ pR2,a$
+ return
+readline
+ a$=""
+readloop
+ get #1,c$
+ if 64 and st then a$="@":goto retline
+ if c$=chr$(13) then goto retline
+ a$=a$+c$
+ goto readloop
+retline
+ if a$="" goto readloop
+ return
+@
