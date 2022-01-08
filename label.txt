@@ -50,10 +50,11 @@ pass2
  print"{home}{down}{down}{down}";n
  p=1
 labelloop
- q=0
+ q=0:q1=0
  for t=p to len(a$)
- if mid$(a$,t,1)=chr$(34) and q=0 then q=1
- if mid$(a$,t,1)=chr$(34) and q=1 then q=0
+ if mid$(a$,t,1)=chr$(34) and q=0 then q1=1
+ if mid$(a$,t,1)=chr$(34) and q=1 then q1=0
+ q=q1
  b$=mid$(a$,t,5)
  if b$="gosub" and q=0 then t=t+5:goto processlabel
  b$=mid$(a$,t,2)
