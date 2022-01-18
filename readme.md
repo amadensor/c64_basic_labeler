@@ -26,7 +26,7 @@
 * run again for ml-loader and ascii-convert
 * load"load",8
 * run
-* use the filename b/reader3
+* use the filename b-reader3
 * hit enter to begin
 * run/stop restore when it completes
 * The BASIC program is in memory for you to run, list, save, whatever you like.
