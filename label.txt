@@ -1,8 +1,8 @@
- d=8: rem disk device
- b=10: rem begin numbers
- s=10: rem step numbers
+ input"device";d: rem disk device
+ input"begin numbers";b: rem begin numbers
+ input"step";s: rem step numbers
  dim l(500):dim l$(500)
- input"Filename";f$
+ input"filename";f$
 pass1setup 
  print"{clr}pass 1"
  n=b-s: rem start one step back
@@ -75,7 +75,7 @@ processlabel
 replacelabel
  b$=mid$(a$,t,z-t)
  gosub trimlabel
- rem if val(b$)>0 then GOTO contline
+ rem "if val(b$)>0 then goto contline"
  for j=1 to c
  if b$=l$(j) then goto foundlabel
  next
@@ -87,6 +87,7 @@ foundlabel
  
 
 finish2
+ pR2,""
  close 1
  close 2
  end
@@ -105,4 +106,5 @@ readloop
 retline
  if a$="" goto readloop
  return
+ rem the loader drops the last line
 @
