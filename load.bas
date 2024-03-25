@@ -13,8 +13,9 @@
 120 read i:poke t,i:next
 
 130 input"filename: ";f$
-140 close1
-150 open1,8,2,f$+",s,r
-160 print"{clr}new":print"{down}{down}{down}sys828
-170 poke198,3:poke631,19:poke632,13:poke633,13
+140 input"device: ";d
+150 close1
+160 open1,d,2,f$+",s,r
+170 print"{clr}new":print"{down}{down}{down}sys828
+180 poke198,3:poke631,19:poke632,13:poke633,13
 

@@ -1,7 +1,9 @@
 main
- input"File";a$
- open1,8,2,a$+",s,r"
+ input"Device: ";d
+ input"File: ";a$
+ open1,d,2,a$+",s,r"
  gosub reader
+ close1
  end
 reader
  gosub readline
